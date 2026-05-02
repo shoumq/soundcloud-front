@@ -12,6 +12,14 @@ export default defineConfig({
     vueJsx(),
     vueDevTools(),
   ],
+  server: {
+    host: '0.0.0.0',
+    proxy: {
+      '/api': 'http://localhost:8080',
+      '/health': 'http://localhost:8080',
+      '/swagger': 'http://localhost:8080',
+    },
+  },
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url))

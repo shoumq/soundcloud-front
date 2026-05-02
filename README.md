@@ -25,6 +25,9 @@ See [Vite Configuration Reference](https://vite.dev/config/).
 
 ## Project Setup
 
+Use Node.js 22, matching CI and the Docker build image. Vite 8 requires Node.js
+20.19+ or 22.12+.
+
 ```sh
 npm install
 ```
