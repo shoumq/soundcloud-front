@@ -26,6 +26,8 @@ export const useMusicStore = defineStore('music', () => {
   const tracks = ref<Track[]>([])
   const albums = ref<Album[]>([])
   const currentTrack = ref<Track | null>(null)
+  const isPlaying = ref(false)
+  const playbackProgress = ref(0)
   const loading = ref(false)
   const busy = ref(false)
   const error = ref('')
@@ -111,6 +113,16 @@ export const useMusicStore = defineStore('music', () => {
 
   function play(track: Track) {
     currentTrack.value = track
+    isPlaying.value = false
+    playbackProgress.value = 0
+  }
+
+  function setPlaybackState(nextState: boolean) {
+    isPlaying.value = nextState
+  }
+
+  function setPlaybackProgress(nextValue: number) {
+    playbackProgress.value = Math.min(1, Math.max(0, nextValue))
   }
 
   async function createAlbum(title: string, description: string) {
@@ -160,6 +172,8 @@ export const useMusicStore = defineStore('music', () => {
     tracks,
     albums,
     currentTrack,
+    isPlaying,
+    playbackProgress,
     loading,
     busy,
     error,
@@ -170,6 +184,8 @@ export const useMusicStore = defineStore('music', () => {
     register,
     logout,
     play,
+    setPlaybackState,
+    setPlaybackProgress,
     createAlbum,
     uploadTrack,
   }

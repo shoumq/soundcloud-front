@@ -46,6 +46,8 @@ function syncAudioState() {
   duration.value = audio.duration || 0
   volume.value = audio.volume
   isPlaying.value = !audio.paused
+  store.setPlaybackState(!audio.paused)
+  store.setPlaybackProgress(audio.duration > 0 ? audio.currentTime / audio.duration : 0)
 }
 
 function seek(event: Event) {

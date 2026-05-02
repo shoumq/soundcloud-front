@@ -436,19 +436,86 @@ main {
 
 .mini-wave {
   display: flex;
-  align-items: center;
-  gap: 3px;
+  align-items: flex-end;
+  gap: 2px;
   height: 30px;
   overflow: hidden;
 }
 
 .mini-wave i {
-  width: 3px;
-  background: #d0d0d0;
+  width: 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #e2e2e2 0%, #cfcfcf 100%);
+  transform-origin: center bottom;
+  transform: scaleY(1);
+  opacity: 0.9;
+  transition:
+    background 0.18s ease,
+    opacity 0.18s ease,
+    transform 0.18s ease;
 }
 
 .track-row.active .mini-wave i {
-  background: #ff5500;
+  background: linear-gradient(180deg, #ff8d57 0%, #ff5500 100%);
+  opacity: 0.22;
+}
+
+.track-row.active .mini-wave i.passed {
+  opacity: 0.95;
+}
+
+.track-row.active .mini-wave i.current {
+  opacity: 1;
+  transform: scaleY(1.08);
+}
+
+.track-row.active .mini-wave i.current-playing {
+  animation: mini-wave-cursor 1s ease-in-out infinite;
+  animation-delay: var(--wave-delay);
+}
+
+.track-row.active .mini-wave i.trail {
+  animation: mini-wave-trail 0.9s ease-in-out infinite;
+}
+
+.track-row.active .mini-wave i.trail-0 {
+  animation-delay: calc(var(--wave-delay) * 0.2);
+}
+
+.track-row.active .mini-wave i.trail-1 {
+  animation-delay: calc(var(--wave-delay) * 0.45);
+}
+
+.track-row.active .mini-wave i.trail-2 {
+  animation-delay: calc(var(--wave-delay) * 0.7);
+}
+
+.track-row.playing .mini-wave i.current-playing {
+  opacity: 1;
+}
+
+@keyframes mini-wave-cursor {
+  0%,
+  100% {
+    transform: scaleY(1.02);
+  }
+
+  50% {
+    transform: scaleY(calc(var(--wave-scale, 1) * 1.02));
+  }
+}
+
+@keyframes mini-wave-trail {
+  0%,
+  100% {
+    transform: scaleY(1);
+    opacity: 0.88;
+  }
+
+  50% {
+    transform: scaleY(calc(var(--wave-scale, 1) * 0.9));
+    opacity: 1;
+  }
 }
 
 .track-side {
