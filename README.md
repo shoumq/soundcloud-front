@@ -72,3 +72,17 @@ Workflow собирает Docker-образ из [`Dockerfile`](Dockerfile) и �
 - `ghcr.io/<owner>/soundcloud-front:<branch>`;
 - `ghcr.io/<owner>/soundcloud-front:<tag>`;
 - `ghcr.io/<owner>/soundcloud-front:sha-<commit>`.
+
+Для веток `main` и `master` workflow также выполняет deploy на удаленный сервер по SSH.
+
+Во время deploy workflow:
+
+- обновляет `/opt/soundcloud-front` из `https://github.com/shoumq/soundcloud-front`;
+- обновляет `/opt/soundcloud` из `https://github.com/shoumq/soundcloud`;
+- запускает `docker compose -f docker-compose.prod.yml up -d --build --remove-orphans` в backend-репозитории.
+
+Для работы deploy в GitHub repository secrets должны быть заданы:
+
+- `DEPLOY_HOST`
+- `DEPLOY_USERNAME`
+- `DEPLOY_PASSWORD`
