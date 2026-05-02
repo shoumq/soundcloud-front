@@ -86,3 +86,4 @@ Workflow собирает Docker-образ из [`Dockerfile`](Dockerfile) и �
 - `DEPLOY_HOST`
 - `DEPLOY_USERNAME`
 - `DEPLOY_PASSWORD`
+- `DEPLOY_GIT_TOKEN`
