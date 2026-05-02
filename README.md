@@ -55,3 +55,20 @@ npm run test:unit
 ```sh
 npm run lint
 ```
+
+## CD
+
+В репозитории настроен GitHub Actions workflow [`.github/workflows/cd.yml`](.github/workflows/cd.yml).
+
+Он запускается:
+
+- при `push` в `main` или `master`;
+- при пуше тега вида `v*`;
+- вручную через `workflow_dispatch`.
+
+Workflow собирает Docker-образ из [`Dockerfile`](Dockerfile) и публикует его в GHCR:
+
+- `ghcr.io/<owner>/soundcloud-front:latest` для default branch;
+- `ghcr.io/<owner>/soundcloud-front:<branch>`;
+- `ghcr.io/<owner>/soundcloud-front:<tag>`;
+- `ghcr.io/<owner>/soundcloud-front:sha-<commit>`.
