@@ -41,6 +41,11 @@ export const useMusicStore = defineStore('music', () => {
     localStorage.setItem(USER_KEY, JSON.stringify(nextUser))
   }
 
+  function setUser(nextUser: User | null) {
+    user.value = nextUser
+    localStorage.setItem(USER_KEY, JSON.stringify(nextUser))
+  }
+
   function clearError() {
     error.value = ''
   }
@@ -62,6 +67,16 @@ export const useMusicStore = defineStore('music', () => {
     } finally {
       loading.value = false
     }
+  }
+
+  async function refreshMe() {
+    if (!token.value) {
+      return null
+    }
+
+    const profile = await api.getMe(token.value)
+    setUser(profile.user)
+    return profile
   }
 
   async function login(email: string, password: string) {
@@ -180,12 +195,14 @@ export const useMusicStore = defineStore('music', () => {
     isAuthenticated,
     clearError,
     loadLibrary,
+    refreshMe,
     login,
     register,
     logout,
     play,
     setPlaybackState,
     setPlaybackProgress,
+    setUser,
     createAlbum,
     uploadTrack,
   }

@@ -130,7 +130,10 @@ function waveBarClass(track: Track, index: number, total: number) {
         <ArtworkCover :item="track" />
 
         <div class="track-info">
-          <span>{{ track.artist ?? 'Неизвестный артист' }}</span>
+          <RouterLink v-if="track.owner_id" class="track-artist-link" :to="{ name: 'user', params: { id: track.owner_id } }">
+            {{ track.artist ?? 'Неизвестный артист' }}
+          </RouterLink>
+          <span v-else>{{ track.artist ?? 'Неизвестный артист' }}</span>
           <h3>{{ track.title ?? 'Трек без названия' }}</h3>
           <div class="mini-wave" aria-hidden="true">
             <i

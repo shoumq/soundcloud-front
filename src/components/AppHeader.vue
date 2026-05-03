@@ -44,7 +44,7 @@ function submitSearch() {
 
     <div class="account-pill">
       <template v-if="isAuthenticated">
-        <span>{{ accountName }}</span>
+        <RouterLink :to="{ name: 'profile' }">{{ accountName }}</RouterLink>
         <button type="button" class="ghost-button compact" @click="store.logout">Выйти</button>
       </template>
       <template v-else>
