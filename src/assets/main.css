@@ -54,15 +54,27 @@ textarea {
   top: 0;
   z-index: 20;
   display: grid;
-  grid-template-columns: auto auto minmax(220px, 1fr) auto;
-  align-items: center;
-  gap: 24px;
+  gap: 18px;
   min-height: 56px;
-  padding: 0 32px;
+  padding: 12px 32px;
   background: rgba(10, 10, 11, 0.92);
   color: var(--text);
   box-shadow: 0 1px 0 var(--line);
   backdrop-filter: blur(16px);
+}
+
+.topbar-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.topbar-content {
+  display: grid;
+  grid-template-columns: auto minmax(220px, 1fr) auto;
+  align-items: center;
+  gap: 24px;
 }
 
 .brand {
@@ -70,6 +82,24 @@ textarea {
   align-items: center;
   gap: 12px;
   font-weight: 800;
+}
+
+.menu-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.menu-toggle:hover {
+  border-color: rgba(255, 106, 26, 0.42);
+  color: var(--accent);
 }
 
 .brand-mark {
@@ -1327,12 +1357,26 @@ main {
 }
 
 @media (max-width: 980px) {
-  .topbar {
-    grid-template-columns: auto 1fr auto;
+  .topbar-content {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .menu-toggle {
+    display: inline-flex;
+  }
+
+  .topbar-content {
+    display: none;
+  }
+
+  .topbar-content.open {
+    display: grid;
   }
 
   .nav-links {
-    display: none;
+    display: grid;
+    gap: 12px;
   }
 
   .hero-section,
@@ -1343,6 +1387,10 @@ main {
 
   .profile-layout {
     grid-template-columns: 1fr;
+  }
+
+  .account-pill {
+    justify-content: flex-start;
   }
 
   .hero-player {
@@ -1365,13 +1413,8 @@ main {
 
 @media (max-width: 700px) {
   .topbar {
-    grid-template-columns: 1fr;
     gap: 10px;
     padding: 12px 16px;
-  }
-
-  .account-pill {
-    justify-content: flex-start;
   }
 
   main {
