@@ -25,7 +25,7 @@ const router = useRouter()
 const store = useMusicStore()
 const { albums, currentTrack, isPlaying, loading, playbackProgress, tracks } = storeToRefs(store)
 const selectedAlbumId = ref('all')
-const copiedTrackId = ref('')
+// const copiedTrackId = ref('')
 
 const query = computed(() => (typeof route.query.q === 'string' ? route.query.q.trim().toLowerCase() : ''))
 const visibleTracks = computed(() => (props.compact ? tracks.value.slice(0, 6) : tracks.value))
@@ -60,29 +60,29 @@ function albumTitle(track: Track) {
   return albumLookup.value.get(track.album_id) ?? 'Альбом'
 }
 
-function trackShareUrl(track: Track) {
-  if (!track.id) {
-    return ''
-  }
+// function trackShareUrl(track: Track) {
+//   if (!track.id) {
+//     return ''
+//   }
 
-  return new URL(router.resolve({ name: 'track', params: { id: track.id } }).href, window.location.origin).toString()
-}
+//   return new URL(router.resolve({ name: 'track', params: { id: track.id } }).href, window.location.origin).toString()
+// }
 
-async function writeClipboard(value: string) {
-  if (navigator.clipboard) {
-    await navigator.clipboard.writeText(value)
-    return
-  }
+// async function writeClipboard(value: string) {
+//   if (navigator.clipboard) {
+//     await navigator.clipboard.writeText(value)
+//     return
+//   }
 
-  const input = document.createElement('input')
-  input.value = value
-  input.style.position = 'fixed'
-  input.style.opacity = '0'
-  document.body.append(input)
-  input.select()
-  document.execCommand('copy')
-  input.remove()
-}
+//   const input = document.createElement('input')
+//   input.value = value
+//   input.style.position = 'fixed'
+//   input.style.opacity = '0'
+//   document.body.append(input)
+//   input.select()
+//   document.execCommand('copy')
+//   input.remove()
+// }
 
 // async function copyTrackLink(track: Track) {
 //   const url = trackShareUrl(track)
