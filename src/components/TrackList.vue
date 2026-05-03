@@ -32,12 +32,12 @@ const emit = defineEmits<{
 const route = useRoute()
 // const router = useRouter()
 const store = useMusicStore()
-const { albums, currentTrack, isAuthenticated, isPlaying, loading, playbackProgress, tracks } = storeToRefs(store)
+const { albums, currentTrack, isAuthenticated, isPlaying, loading, playbackProgress, tracks: libraryTracks } = storeToRefs(store)
 const selectedAlbumId = ref('all')
 // const copiedTrackId = ref('')
 
 const query = computed(() => (typeof route.query.q === 'string' ? route.query.q.trim().toLowerCase() : ''))
-const sourceTracks = computed(() => props.tracks ?? tracks.value)
+const sourceTracks = computed(() => props.tracks ?? libraryTracks.value)
 const visibleTracks = computed(() => (props.compact ? sourceTracks.value.slice(0, 6) : sourceTracks.value))
 const resolvedTitle = computed(() => props.title || (props.compact ? 'Новые треки' : 'Все треки'))
 
