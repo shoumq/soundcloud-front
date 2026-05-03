@@ -84,20 +84,20 @@ async function writeClipboard(value: string) {
   input.remove()
 }
 
-async function copyTrackLink(track: Track) {
-  const url = trackShareUrl(track)
-  if (!url || !track.id) {
-    return
-  }
+// async function copyTrackLink(track: Track) {
+//   const url = trackShareUrl(track)
+//   if (!url || !track.id) {
+//     return
+//   }
 
-  await writeClipboard(url)
-  copiedTrackId.value = track.id
-  window.setTimeout(() => {
-    if (copiedTrackId.value === track.id) {
-      copiedTrackId.value = ''
-    }
-  }, 1600)
-}
+//   await writeClipboard(url)
+//   copiedTrackId.value = track.id
+//   window.setTimeout(() => {
+//     if (copiedTrackId.value === track.id) {
+//       copiedTrackId.value = ''
+//     }
+//   }, 1600)
+// }
 
 function waveStyle(index: number) {
   const shape = [
