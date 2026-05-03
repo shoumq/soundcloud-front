@@ -58,7 +58,7 @@ export const useMusicStore = defineStore('music', () => {
         currentTrack.value = nextTracks[0] ?? null
       }
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Не удалось загрузить библиотеку'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось загрузить треки и альбомы'
     } finally {
       loading.value = false
     }
@@ -77,7 +77,7 @@ export const useMusicStore = defineStore('music', () => {
 
       persistSession(result.token, result.user ?? null)
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Не удалось войти'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось выполнить вход'
       throw caught
     } finally {
       busy.value = false
@@ -97,7 +97,7 @@ export const useMusicStore = defineStore('music', () => {
 
       persistSession(result.token, result.user ?? null)
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Не удалось создать аккаунт'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось зарегистрироваться'
       throw caught
     } finally {
       busy.value = false

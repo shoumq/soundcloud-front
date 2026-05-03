@@ -51,7 +51,7 @@ watch(
 
 function albumTitle(track: Track) {
   if (!track.album_id) {
-    return 'Сингл'
+    return 'Отдельный трек'
   }
 
   return albumLookup.value.get(track.album_id) ?? 'Альбом'
@@ -101,8 +101,8 @@ function waveBarClass(track: Track, index: number, total: number) {
   <section class="section-block">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Поток</p>
-        <h2>{{ compact ? 'Свежие треки' : 'Поток' }}</h2>
+        <p class="eyebrow">Музыка</p>
+        <h2>{{ compact ? 'Новые треки' : 'Все треки' }}</h2>
       </div>
       <select v-model="selectedAlbumId" aria-label="Фильтр по альбому">
         <option value="all">Все альбомы</option>
@@ -110,10 +110,10 @@ function waveBarClass(track: Track, index: number, total: number) {
       </select>
     </div>
 
-    <div v-if="loading" class="loading-row">Загрузка треков...</div>
+    <div v-if="loading" class="loading-row">Загружаем треки...</div>
 
     <div v-else-if="filteredTracks.length === 0" class="empty-copy">
-      Треков пока нет. Загрузите первый, и поток оживёт.
+      Пока ни одного трека. Загрузите первый и начните собирать свою библиотеку.
     </div>
 
     <div v-else class="track-list">

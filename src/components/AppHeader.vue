@@ -11,7 +11,7 @@ const { isAuthenticated, user } = storeToRefs(store)
 
 const search = ref(typeof route.query.q === 'string' ? route.query.q : '')
 
-const accountName = computed(() => user.value?.username ?? user.value?.email ?? 'Артист')
+const accountName = computed(() => user.value?.username ?? user.value?.email ?? 'Музыкант')
 
 watch(
   () => route.query.q,
@@ -33,13 +33,13 @@ function submitSearch() {
     </RouterLink>
 
     <nav class="nav-links" aria-label="Основная навигация">
-      <RouterLink :to="{ name: 'stream' }">Поток</RouterLink>
+      <RouterLink :to="{ name: 'stream' }">Треки</RouterLink>
       <RouterLink :to="{ name: 'albums' }">Альбомы</RouterLink>
-      <RouterLink :to="{ name: 'upload' }">Загрузка</RouterLink>
+      <RouterLink :to="{ name: 'upload' }">Загрузить</RouterLink>
     </nav>
 
     <form class="search-wrap" @submit.prevent="submitSearch">
-      <input v-model="search" type="search" placeholder="Искать треки, артистов" aria-label="Поиск треков" />
+      <input v-model="search" type="search" placeholder="Найти трек или артиста" aria-label="Поиск треков" />
     </form>
 
     <div class="account-pill">

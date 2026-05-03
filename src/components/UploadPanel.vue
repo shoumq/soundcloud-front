@@ -59,8 +59,8 @@ async function submitUpload() {
   <section class="panel">
     <div class="section-heading tight">
       <div>
-        <p class="eyebrow">Инструменты автора</p>
-        <h2>Загрузка</h2>
+        <p class="eyebrow">Загрузка</p>
+        <h2>Новый трек</h2>
       </div>
     </div>
 
@@ -79,7 +79,7 @@ async function submitUpload() {
       <label class="file-input">
         <span>Аудиофайл</span>
         <input type="file" accept="audio/*" required :disabled="!isAuthenticated" @change="onAudioChange" />
-        <b>{{ uploadAudioName || 'Выберите аудио' }}</b>
+        <b>{{ uploadAudioName || 'Выберите файл' }}</b>
       </label>
       <label class="file-input">
         <span>Обложка</span>
@@ -89,7 +89,7 @@ async function submitUpload() {
           :disabled="!isAuthenticated"
           @change="onCoverChange"
         />
-        <b>{{ uploadCoverName || 'Обложка по желанию' }}</b>
+        <b>{{ uploadCoverName || 'Можно без обложки' }}</b>
       </label>
       <button type="submit" class="primary-button" :disabled="busy || !isAuthenticated || !uploadForm.audio">
         Загрузить трек

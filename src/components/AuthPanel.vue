@@ -28,15 +28,15 @@ async function submitAuth() {
   <section class="panel auth-panel">
     <div class="section-heading tight">
       <div>
-        <p class="eyebrow">Аккаунт</p>
-        <h2>{{ isAuthenticated ? 'Вы вошли' : 'Войти' }}</h2>
+        <p class="eyebrow">Профиль</p>
+        <h2>{{ isAuthenticated ? 'Вы вошли' : 'Вход' }}</h2>
       </div>
     </div>
 
     <div v-if="isAuthenticated" class="profile-block">
       <div class="avatar">{{ (user?.username ?? user?.email ?? 'А').slice(0, 2).toUpperCase() }}</div>
       <div>
-        <strong>{{ user?.username ?? 'Артист' }}</strong>
+        <strong>{{ user?.username ?? 'Музыкант' }}</strong>
         <span>{{ user?.email }}</span>
       </div>
     </div>
@@ -61,7 +61,7 @@ async function submitAuth() {
         <input v-model="authForm.password" type="password" autocomplete="current-password" minlength="8" required />
       </label>
       <button type="submit" class="primary-button" :disabled="busy">
-        {{ busy ? 'Подождите...' : authMode === 'login' ? 'Войти' : 'Создать аккаунт' }}
+        {{ busy ? 'Входим...' : authMode === 'login' ? 'Войти' : 'Зарегистрироваться' }}
       </button>
     </form>
   </section>

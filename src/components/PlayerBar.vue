@@ -91,7 +91,7 @@ defineExpose({ playTrack })
         class="transport-button"
         :class="{ playing: isPlaying }"
         :disabled="!currentTrack"
-        :aria-label="isPlaying ? 'Поставить на паузу' : 'Воспроизвести трек'"
+        :aria-label="isPlaying ? 'Пауза' : 'Воспроизвести'"
         @click="togglePlayback"
       >
         <span aria-hidden="true"></span>

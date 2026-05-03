@@ -22,7 +22,7 @@ async function submitAlbum() {
   <section class="panel">
     <div class="section-heading tight">
       <div>
-        <p class="eyebrow">Каталог</p>
+        <p class="eyebrow">Альбомы</p>
         <h2>Новый альбом</h2>
       </div>
     </div>

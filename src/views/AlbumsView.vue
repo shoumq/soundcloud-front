@@ -6,9 +6,9 @@ import AuthPanel from '@/components/AuthPanel.vue'
 
 <template>
   <section class="page-head">
-    <p class="eyebrow">Коллекции</p>
+    <p class="eyebrow">Альбомы</p>
     <h1>Альбомы</h1>
-    <p>Создавайте релизы и держите синглы в аккуратных, удобных для просмотра коллекциях.</p>
+    <p>Собирайте треки в альбомы и держите каталог в порядке.</p>
   </section>
 
   <section class="content-grid">
