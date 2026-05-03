@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRoute, useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 // import { Copy, ExternalLink } from 'lucide-vue-next'
 import ArtworkCover from '@/components/ArtworkCover.vue'
 import { type Track } from '@/services/api'
