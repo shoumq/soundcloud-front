@@ -16,23 +16,23 @@ const featuredTrack = computed(() => tracks.value[0] ?? null)
 <template>
   <section class="hero-section">
     <div class="hero-copy">
-      <p class="eyebrow">New and rising</p>
-      <h1>Listen now, upload next.</h1>
+      <p class="eyebrow">Новое и заметное</p>
+      <h1>Слушай сейчас, загружай следующим.</h1>
       <p class="hero-text">
-        Discover raw drops, collect albums and keep the player close while the next sound takes shape.
+        Открывайте свежие релизы, собирайте альбомы и держите плеер под рукой, пока рождается следующий звук.
       </p>
       <div class="hero-actions">
-        <RouterLink :to="{ name: 'stream' }" class="primary-link">Start listening</RouterLink>
-        <RouterLink :to="{ name: 'upload' }" class="secondary-link">Upload track</RouterLink>
+        <RouterLink :to="{ name: 'stream' }" class="primary-link">Начать слушать</RouterLink>
+        <RouterLink :to="{ name: 'upload' }" class="secondary-link">Загрузить трек</RouterLink>
       </div>
     </div>
 
     <article v-if="featuredTrack" class="hero-player">
       <ArtworkCover :item="featuredTrack" size="large" />
       <div class="hero-track-meta">
-        <span>{{ featuredTrack.artist ?? 'Unknown artist' }}</span>
-        <h2>{{ featuredTrack.title ?? 'Untitled track' }}</h2>
-        <button type="button" class="play-button" @click="emit('play')">Play</button>
+        <span>{{ featuredTrack.artist ?? 'Неизвестный артист' }}</span>
+        <h2>{{ featuredTrack.title ?? 'Трек без названия' }}</h2>
+        <button type="button" class="play-button" @click="emit('play')">Слушать</button>
       </div>
       <div class="waveform" aria-hidden="true">
         <span v-for="index in 44" :key="index" :style="{ height: `${18 + ((index * 17) % 58)}px` }"></span>
@@ -42,8 +42,8 @@ const featuredTrack = computed(() => tracks.value[0] ?? null)
     <article v-else class="hero-player empty-state-card">
       <ArtworkCover size="large" />
       <div class="hero-track-meta">
-        <span>Waiting for tracks</span>
-        <h2>Your stream will appear here</h2>
+        <span>Ожидаем треки</span>
+        <h2>Ваш поток появится здесь</h2>
       </div>
       <div class="waveform muted" aria-hidden="true">
         <span v-for="index in 44" :key="index" :style="{ height: `${16 + ((index * 11) % 42)}px` }"></span>

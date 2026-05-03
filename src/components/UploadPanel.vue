@@ -59,40 +59,40 @@ async function submitUpload() {
   <section class="panel">
     <div class="section-heading tight">
       <div>
-        <p class="eyebrow">Creator tools</p>
-        <h2>Upload</h2>
+        <p class="eyebrow">Инструменты автора</p>
+        <h2>Загрузка</h2>
       </div>
     </div>
 
     <form class="form-stack" @submit.prevent="submitUpload">
       <label>
-        Track title
+        Название трека
         <input v-model="uploadForm.title" type="text" required :disabled="!isAuthenticated" />
       </label>
       <label>
-        Album
+        Альбом
         <select v-model="uploadForm.albumId" :disabled="!isAuthenticated">
-          <option value="">Single</option>
+          <option value="">Сингл</option>
           <option v-for="album in albums" :key="album.id" :value="album.id">{{ album.title }}</option>
         </select>
       </label>
       <label class="file-input">
-        <span>Audio file</span>
+        <span>Аудиофайл</span>
         <input type="file" accept="audio/*" required :disabled="!isAuthenticated" @change="onAudioChange" />
-        <b>{{ uploadAudioName || 'Choose audio' }}</b>
+        <b>{{ uploadAudioName || 'Выберите аудио' }}</b>
       </label>
       <label class="file-input">
-        <span>Cover image</span>
+        <span>Обложка</span>
         <input
           type="file"
           accept="image/jpeg,image/png,image/webp,image/gif"
           :disabled="!isAuthenticated"
           @change="onCoverChange"
         />
-        <b>{{ uploadCoverName || 'Optional cover' }}</b>
+        <b>{{ uploadCoverName || 'Обложка по желанию' }}</b>
       </label>
       <button type="submit" class="primary-button" :disabled="busy || !isAuthenticated || !uploadForm.audio">
-        Upload track
+        Загрузить трек
       </button>
     </form>
   </section>

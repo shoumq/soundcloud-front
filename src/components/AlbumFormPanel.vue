@@ -22,21 +22,21 @@ async function submitAlbum() {
   <section class="panel">
     <div class="section-heading tight">
       <div>
-        <p class="eyebrow">Catalog</p>
-        <h2>New album</h2>
+        <p class="eyebrow">Каталог</p>
+        <h2>Новый альбом</h2>
       </div>
     </div>
 
     <form class="form-stack" @submit.prevent="submitAlbum">
       <label>
-        Title
+        Название
         <input v-model="albumForm.title" type="text" required :disabled="!isAuthenticated" />
       </label>
       <label>
-        Description
+        Описание
         <textarea v-model="albumForm.description" rows="3" :disabled="!isAuthenticated"></textarea>
       </label>
-      <button type="submit" class="secondary-button" :disabled="busy || !isAuthenticated">Create album</button>
+      <button type="submit" class="secondary-button" :disabled="busy || !isAuthenticated">Создать альбом</button>
     </form>
   </section>
 </template>

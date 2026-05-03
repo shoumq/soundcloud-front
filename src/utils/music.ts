@@ -2,15 +2,15 @@ import type { Album, Track } from '@/services/api'
 
 export function formatDate(value?: string) {
   if (!value) {
-    return 'Fresh drop'
+    return 'Свежий релиз'
   }
 
-  return new Intl.DateTimeFormat('en', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value))
+  return new Intl.DateTimeFormat('ru-RU', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value))
 }
 
 export function formatSize(value?: number) {
   if (!value) {
-    return 'Stream'
+    return 'Поток'
   }
 
   return `${(value / 1024 / 1024).toFixed(1)} MB`

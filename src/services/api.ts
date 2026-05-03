@@ -48,7 +48,7 @@ async function parseResponse<T>(response: Response): Promise<T> {
     const message =
       typeof payload?.error === 'string' && payload.error.trim().length > 0
         ? payload.error
-        : `Request failed with ${response.status}`
+        : `Запрос завершился с ошибкой ${response.status}`
     throw new Error(message)
   }
 

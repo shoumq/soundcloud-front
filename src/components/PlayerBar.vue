@@ -81,7 +81,7 @@ defineExpose({ playTrack })
     <div class="now-playing">
       <ArtworkCover :item="currentTrack" size="small" />
       <div>
-        <strong>{{ currentTrack?.title ?? 'Select a track' }}</strong>
+        <strong>{{ currentTrack?.title ?? 'Выберите трек' }}</strong>
         <span>{{ currentTrack?.artist ?? 'SoundWave' }}</span>
       </div>
     </div>
@@ -91,7 +91,7 @@ defineExpose({ playTrack })
         class="transport-button"
         :class="{ playing: isPlaying }"
         :disabled="!currentTrack"
-        :aria-label="isPlaying ? 'Pause track' : 'Play track'"
+        :aria-label="isPlaying ? 'Поставить на паузу' : 'Воспроизвести трек'"
         @click="togglePlayback"
       >
         <span aria-hidden="true"></span>
@@ -106,7 +106,7 @@ defineExpose({ playTrack })
         step="0.1"
         :value="currentTime"
         :disabled="!currentTrack"
-        aria-label="Track progress"
+        aria-label="Прогресс трека"
         :style="{ '--progress': `${duration ? (currentTime / duration) * 100 : 0}%` }"
         @input="seek"
       />
@@ -120,7 +120,7 @@ defineExpose({ playTrack })
           max="1"
           step="0.01"
           :value="volume"
-          aria-label="Volume"
+          aria-label="Громкость"
           :style="{ '--progress': `${volume * 100}%` }"
           @input="changeVolume"
         />

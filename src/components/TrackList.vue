@@ -51,10 +51,10 @@ watch(
 
 function albumTitle(track: Track) {
   if (!track.album_id) {
-    return 'Single'
+    return 'Сингл'
   }
 
-  return albumLookup.value.get(track.album_id) ?? 'Album'
+  return albumLookup.value.get(track.album_id) ?? 'Альбом'
 }
 
 function waveStyle(index: number) {
@@ -101,19 +101,19 @@ function waveBarClass(track: Track, index: number, total: number) {
   <section class="section-block">
     <div class="section-heading">
       <div>
-        <p class="eyebrow">Stream</p>
-        <h2>{{ compact ? 'Fresh tracks' : 'Stream' }}</h2>
+        <p class="eyebrow">Поток</p>
+        <h2>{{ compact ? 'Свежие треки' : 'Поток' }}</h2>
       </div>
-      <select v-model="selectedAlbumId" aria-label="Filter by album">
-        <option value="all">All albums</option>
+      <select v-model="selectedAlbumId" aria-label="Фильтр по альбому">
+        <option value="all">Все альбомы</option>
         <option v-for="album in albums" :key="album.id" :value="album.id">{{ album.title }}</option>
       </select>
     </div>
 
-    <div v-if="loading" class="loading-row">Loading tracks...</div>
+    <div v-if="loading" class="loading-row">Загрузка треков...</div>
 
     <div v-else-if="filteredTracks.length === 0" class="empty-copy">
-      No tracks yet. Upload the first one and the stream comes alive.
+      Треков пока нет. Загрузите первый, и поток оживёт.
     </div>
 
     <div v-else class="track-list">
@@ -123,15 +123,15 @@ function waveBarClass(track: Track, index: number, total: number) {
         class="track-row"
         :class="{ active: currentTrack?.id === track.id, playing: currentTrack?.id === track.id && isPlaying }"
       >
-        <button type="button" class="round-play" :aria-label="`Play ${track.title}`" @click="emit('play', track)">
+        <button type="button" class="round-play" :aria-label="`Воспроизвести ${track.title}`" @click="emit('play', track)">
           <span>{{ currentTrack?.id === track.id ? '||' : '>' }}</span>
         </button>
 
         <ArtworkCover :item="track" />
 
         <div class="track-info">
-          <span>{{ track.artist ?? 'Unknown artist' }}</span>
-          <h3>{{ track.title ?? 'Untitled track' }}</h3>
+          <span>{{ track.artist ?? 'Неизвестный артист' }}</span>
+          <h3>{{ track.title ?? 'Трек без названия' }}</h3>
           <div class="mini-wave" aria-hidden="true">
             <i
               v-for="index in 24"

@@ -6,9 +6,9 @@ import UploadPanel from '@/components/UploadPanel.vue'
 
 <template>
   <section class="page-head">
-    <p class="eyebrow">Creator tools</p>
-    <h1>Upload</h1>
-    <p>Add a track, attach cover art and optionally place it into one of your albums.</p>
+    <p class="eyebrow">Инструменты автора</p>
+    <h1>Загрузка</h1>
+    <p>Добавьте трек, прикрепите обложку и при желании поместите его в один из своих альбомов.</p>
   </section>
 
   <section class="content-grid">

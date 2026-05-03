@@ -6,9 +6,9 @@ import AuthPanel from '@/components/AuthPanel.vue'
 
 <template>
   <section class="page-head">
-    <p class="eyebrow">Collections</p>
-    <h1>Albums</h1>
-    <p>Create releases and keep singles organized into clean, browsable collections.</p>
+    <p class="eyebrow">Коллекции</p>
+    <h1>Альбомы</h1>
+    <p>Создавайте релизы и держите синглы в аккуратных, удобных для просмотра коллекциях.</p>
   </section>
 
   <section class="content-grid">

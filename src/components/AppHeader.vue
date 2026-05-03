@@ -11,7 +11,7 @@ const { isAuthenticated, user } = storeToRefs(store)
 
 const search = ref(typeof route.query.q === 'string' ? route.query.q : '')
 
-const accountName = computed(() => user.value?.username ?? user.value?.email ?? 'Artist')
+const accountName = computed(() => user.value?.username ?? user.value?.email ?? 'Артист')
 
 watch(
   () => route.query.q,
@@ -27,28 +27,28 @@ function submitSearch() {
 
 <template>
   <header class="topbar">
-    <RouterLink class="brand" :to="{ name: 'home' }" aria-label="SoundWave home">
+    <RouterLink class="brand" :to="{ name: 'home' }" aria-label="SoundWave главная">
       <span class="brand-mark" aria-hidden="true"></span>
       <span>SoundWave</span>
     </RouterLink>
 
-    <nav class="nav-links" aria-label="Primary navigation">
-      <RouterLink :to="{ name: 'stream' }">Stream</RouterLink>
-      <RouterLink :to="{ name: 'albums' }">Albums</RouterLink>
-      <RouterLink :to="{ name: 'upload' }">Upload</RouterLink>
+    <nav class="nav-links" aria-label="Основная навигация">
+      <RouterLink :to="{ name: 'stream' }">Поток</RouterLink>
+      <RouterLink :to="{ name: 'albums' }">Альбомы</RouterLink>
+      <RouterLink :to="{ name: 'upload' }">Загрузка</RouterLink>
     </nav>
 
     <form class="search-wrap" @submit.prevent="submitSearch">
-      <input v-model="search" type="search" placeholder="Search tracks, artists" aria-label="Search tracks" />
+      <input v-model="search" type="search" placeholder="Искать треки, артистов" aria-label="Поиск треков" />
     </form>
 
     <div class="account-pill">
       <template v-if="isAuthenticated">
         <span>{{ accountName }}</span>
-        <button type="button" class="ghost-button compact" @click="store.logout">Log out</button>
+        <button type="button" class="ghost-button compact" @click="store.logout">Выйти</button>
       </template>
       <template v-else>
-        <span>Guest</span>
+        <span>Гость</span>
       </template>
     </div>
   </header>

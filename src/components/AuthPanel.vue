@@ -28,40 +28,40 @@ async function submitAuth() {
   <section class="panel auth-panel">
     <div class="section-heading tight">
       <div>
-        <p class="eyebrow">Account</p>
-        <h2>{{ isAuthenticated ? 'Signed in' : 'Join in' }}</h2>
+        <p class="eyebrow">Аккаунт</p>
+        <h2>{{ isAuthenticated ? 'Вы вошли' : 'Войти' }}</h2>
       </div>
     </div>
 
     <div v-if="isAuthenticated" class="profile-block">
-      <div class="avatar">{{ (user?.username ?? user?.email ?? 'A').slice(0, 2).toUpperCase() }}</div>
+      <div class="avatar">{{ (user?.username ?? user?.email ?? 'А').slice(0, 2).toUpperCase() }}</div>
       <div>
-        <strong>{{ user?.username ?? 'Artist' }}</strong>
+        <strong>{{ user?.username ?? 'Артист' }}</strong>
         <span>{{ user?.email }}</span>
       </div>
     </div>
 
     <form v-else class="form-stack" @submit.prevent="submitAuth">
       <div class="segmented">
-        <button type="button" :class="{ selected: authMode === 'login' }" @click="authMode = 'login'">Login</button>
+        <button type="button" :class="{ selected: authMode === 'login' }" @click="authMode = 'login'">Вход</button>
         <button type="button" :class="{ selected: authMode === 'register' }" @click="authMode = 'register'">
-          Register
+          Регистрация
         </button>
       </div>
       <label>
-        Email
+        Почта
         <input v-model="authForm.email" type="email" autocomplete="email" required />
       </label>
       <label v-if="authMode === 'register'">
-        Username
+        Имя пользователя
         <input v-model="authForm.username" type="text" autocomplete="username" required />
       </label>
       <label>
-        Password
+        Пароль
         <input v-model="authForm.password" type="password" autocomplete="current-password" minlength="8" required />
       </label>
       <button type="submit" class="primary-button" :disabled="busy">
-        {{ busy ? 'Working...' : authMode === 'login' ? 'Sign in' : 'Create account' }}
+        {{ busy ? 'Подождите...' : authMode === 'login' ? 'Войти' : 'Создать аккаунт' }}
       </button>
     </form>
   </section>

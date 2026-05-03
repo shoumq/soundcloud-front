@@ -9,9 +9,9 @@ const store = useMusicStore()
 
 <template>
   <section class="page-head">
-    <p class="eyebrow">Explore</p>
-    <h1>Stream</h1>
-    <p>Browse every uploaded track, filter by album and keep the player docked while you listen.</p>
+    <p class="eyebrow">Обзор</p>
+    <h1>Поток</h1>
+    <p>Просматривайте все загруженные треки, фильтруйте по альбомам и держите плеер закреплённым во время прослушивания.</p>
   </section>
 
   <section class="content-grid">

@@ -58,7 +58,7 @@ export const useMusicStore = defineStore('music', () => {
         currentTrack.value = nextTracks[0] ?? null
       }
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Could not load library'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось загрузить библиотеку'
     } finally {
       loading.value = false
     }
@@ -72,12 +72,12 @@ export const useMusicStore = defineStore('music', () => {
       const result = await api.login(email, password)
 
       if (!result.token) {
-        throw new Error('Auth token is missing')
+        throw new Error('Отсутствует токен авторизации')
       }
 
       persistSession(result.token, result.user ?? null)
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Could not sign in'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось войти'
       throw caught
     } finally {
       busy.value = false
@@ -92,12 +92,12 @@ export const useMusicStore = defineStore('music', () => {
       const result = await api.register(email, username, password)
 
       if (!result.token) {
-        throw new Error('Auth token is missing')
+        throw new Error('Отсутствует токен авторизации')
       }
 
       persistSession(result.token, result.user ?? null)
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Could not create account'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось создать аккаунт'
       throw caught
     } finally {
       busy.value = false
@@ -127,7 +127,7 @@ export const useMusicStore = defineStore('music', () => {
 
   async function createAlbum(title: string, description: string) {
     if (!token.value) {
-      throw new Error('Sign in to create albums')
+      throw new Error('Войдите, чтобы создавать альбомы')
     }
 
     busy.value = true
@@ -138,7 +138,7 @@ export const useMusicStore = defineStore('music', () => {
       albums.value = [album, ...albums.value]
       return album
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Could not create album'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось создать альбом'
       throw caught
     } finally {
       busy.value = false
@@ -147,7 +147,7 @@ export const useMusicStore = defineStore('music', () => {
 
   async function uploadTrack(payload: { title: string; albumId?: string; audio: File; cover?: File }) {
     if (!token.value) {
-      throw new Error('Sign in to upload tracks')
+      throw new Error('Войдите, чтобы загружать треки')
     }
 
     busy.value = true
@@ -159,7 +159,7 @@ export const useMusicStore = defineStore('music', () => {
       currentTrack.value = track
       return track
     } catch (caught) {
-      error.value = caught instanceof Error ? caught.message : 'Could not upload track'
+      error.value = caught instanceof Error ? caught.message : 'Не удалось загрузить трек'
       throw caught
     } finally {
       busy.value = false
