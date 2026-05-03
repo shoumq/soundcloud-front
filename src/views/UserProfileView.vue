@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import TrackList from '@/components/TrackList.vue'
 import { useRoute } from 'vue-router'
 import UserAvatar from '@/components/UserAvatar.vue'
-import UserTracksPanel from '@/components/UserTracksPanel.vue'
 import { api, type UserProfile } from '@/services/api'
 import { useMusicStore } from '@/stores/music'
 
@@ -81,11 +81,12 @@ onMounted(() => {
 
   <section v-if="profile" class="content-grid profile-layout">
     <div class="main-column">
-      <UserTracksPanel
+      <TrackList
         v-if="profile.can_view_tracks"
         title="Треки пользователя"
         empty-text="У этого пользователя пока нет опубликованных треков."
         :tracks="profile.tracks"
+        :show-album-filter="false"
         @play="store.play"
       />
 

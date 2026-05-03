@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import { storeToRefs } from 'pinia'
+import TrackList from '@/components/TrackList.vue'
 import UserAvatar from '@/components/UserAvatar.vue'
-import UserTracksPanel from '@/components/UserTracksPanel.vue'
 import { api, type User, type UserProfile } from '@/services/api'
 import { useMusicStore } from '@/stores/music'
 
@@ -161,10 +161,11 @@ onMounted(() => {
         </form>
       </section>
 
-      <UserTracksPanel
+      <TrackList
         title="Загруженные треки"
         empty-text="У вас пока нет загруженных треков."
         :tracks="profile.tracks"
+        :show-album-filter="false"
         @play="store.play"
       />
     </div>

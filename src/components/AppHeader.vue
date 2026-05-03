@@ -35,6 +35,7 @@ function submitSearch() {
 
     <nav class="nav-links" aria-label="Основная навигация">
       <RouterLink :to="{ name: 'stream' }">Треки</RouterLink>
+      <RouterLink :to="{ name: 'favorites' }">Любимые</RouterLink>
       <RouterLink :to="{ name: 'albums' }">Альбомы</RouterLink>
       <RouterLink :to="{ name: 'upload' }">Загрузить</RouterLink>
     </nav>

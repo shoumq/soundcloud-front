@@ -32,6 +32,8 @@ export interface Track {
   source_provider?: string
   source_url?: string
   embed_html?: string
+  likes_count?: number
+  liked_by_me?: boolean
   created_at?: string
 }
 
@@ -122,13 +124,17 @@ export const api = {
     return parseResponse<AuthResult>(response)
   },
 
-  async getTracks() {
-    const response = await fetch(`${API_BASE_URL}/api/v1/tracks`)
+  async getTracks(token?: string) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/tracks`, {
+      headers: authHeaders(token),
+    })
     return parseResponse<Track[]>(response)
   },
 
-  async getTrack(trackId: string) {
-    const response = await fetch(`${API_BASE_URL}/api/v1/tracks/${encodeURIComponent(trackId)}`)
+  async getTrack(trackId: string, token?: string) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/tracks/${encodeURIComponent(trackId)}`, {
+      headers: authHeaders(token),
+    })
     return parseResponse<Track>(response)
   },
 
@@ -267,6 +273,24 @@ export const api = {
         url: payload.url,
         album_id: payload.albumId ?? '',
       }),
+    })
+
+    return parseResponse<Track>(response)
+  },
+
+  async likeTrack(token: string, trackId: string) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/tracks/${encodeURIComponent(trackId)}/like`, {
+      method: 'POST',
+      headers: authHeaders(token),
+    })
+
+    return parseResponse<Track>(response)
+  },
+
+  async unlikeTrack(token: string, trackId: string) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/tracks/${encodeURIComponent(trackId)}/like`, {
+      method: 'DELETE',
+      headers: authHeaders(token),
     })
 
     return parseResponse<Track>(response)

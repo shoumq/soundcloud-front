@@ -55,7 +55,7 @@ export const useMusicStore = defineStore('music', () => {
     clearError()
 
     try {
-      const [nextTracks, nextAlbums] = await Promise.all([api.getTracks(), api.getAlbums()])
+      const [nextTracks, nextAlbums] = await Promise.all([api.getTracks(token.value || undefined), api.getAlbums()])
       tracks.value = nextTracks
       albums.value = nextAlbums
     } catch (caught) {
@@ -87,6 +87,7 @@ export const useMusicStore = defineStore('music', () => {
       }
 
       persistSession(result.token, result.user ?? null)
+      await loadLibrary()
     } catch (caught) {
       error.value = caught instanceof Error ? caught.message : 'Не удалось выполнить вход'
       throw caught
@@ -107,6 +108,7 @@ export const useMusicStore = defineStore('music', () => {
       }
 
       persistSession(result.token, result.user ?? null)
+      await loadLibrary()
     } catch (caught) {
       error.value = caught instanceof Error ? caught.message : 'Не удалось зарегистрироваться'
       throw caught
@@ -120,6 +122,16 @@ export const useMusicStore = defineStore('music', () => {
     user.value = null
     localStorage.removeItem(TOKEN_KEY)
     localStorage.removeItem(USER_KEY)
+    tracks.value = tracks.value.map((track) => ({
+      ...track,
+      liked_by_me: false,
+    }))
+    if (currentTrack.value) {
+      currentTrack.value = {
+        ...currentTrack.value,
+        liked_by_me: false,
+      }
+    }
   }
 
   function play(track: Track) {
@@ -218,6 +230,39 @@ export const useMusicStore = defineStore('music', () => {
     }
   }
 
+  function applyTrackUpdate(nextTrack: Track) {
+    tracks.value = tracks.value.map((track) => (track.id === nextTrack.id ? nextTrack : track))
+
+    if (currentTrack.value?.id === nextTrack.id) {
+      currentTrack.value = nextTrack
+    }
+  }
+
+  async function toggleTrackLike(trackId: string) {
+    if (!token.value) {
+      throw new Error('Войдите, чтобы добавлять треки в избранное')
+    }
+
+    clearError()
+
+    const track = tracks.value.find((item) => item.id === trackId) ?? (currentTrack.value?.id === trackId ? currentTrack.value : null)
+    if (!track?.id) {
+      throw new Error('Трек не найден')
+    }
+
+    try {
+      const nextTrack = track.liked_by_me
+        ? await api.unlikeTrack(token.value, track.id)
+        : await api.likeTrack(token.value, track.id)
+
+      applyTrackUpdate(nextTrack)
+      return nextTrack
+    } catch (caught) {
+      error.value = caught instanceof Error ? caught.message : 'Не удалось обновить избранное'
+      throw caught
+    }
+  }
+
   return {
     token,
     user,
@@ -244,5 +289,6 @@ export const useMusicStore = defineStore('music', () => {
     importSoundCloudAlbum,
     uploadTrack,
     importSoundCloudTrack,
+    toggleTrackLike,
   }
 })

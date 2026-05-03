@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import AlbumsView from '@/views/AlbumsView.vue'
+import FavoritesView from '@/views/FavoritesView.vue'
 import HomeView from '@/views/HomeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import StreamView from '@/views/StreamView.vue'
@@ -19,6 +20,11 @@ const router = createRouter({
       path: '/stream',
       name: 'stream',
       component: StreamView,
+    },
+    {
+      path: '/favorites',
+      name: 'favorites',
+      component: FavoritesView,
     },
     {
       path: '/tracks/:id',

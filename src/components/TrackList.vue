@@ -2,6 +2,7 @@
 import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useRoute } from 'vue-router'
+import { Heart } from 'lucide-vue-next'
 // import { Copy, ExternalLink } from 'lucide-vue-next'
 import ArtworkCover from '@/components/ArtworkCover.vue'
 import { type Track } from '@/services/api'
@@ -10,9 +11,17 @@ import { useMusicStore } from '@/stores/music'
 const props = withDefaults(
   defineProps<{
     compact?: boolean
+    tracks?: Track[]
+    title?: string
+    emptyText?: string
+    showAlbumFilter?: boolean
   }>(),
   {
     compact: false,
+    tracks: undefined,
+    title: '',
+    emptyText: 'Пока ни одного трека. Загрузите первый и начните собирать свою библиотеку.',
+    showAlbumFilter: true,
   },
 )
 
@@ -23,12 +32,14 @@ const emit = defineEmits<{
 const route = useRoute()
 // const router = useRouter()
 const store = useMusicStore()
-const { albums, currentTrack, isPlaying, loading, playbackProgress, tracks } = storeToRefs(store)
+const { albums, currentTrack, isAuthenticated, isPlaying, loading, playbackProgress, tracks } = storeToRefs(store)
 const selectedAlbumId = ref('all')
 // const copiedTrackId = ref('')
 
 const query = computed(() => (typeof route.query.q === 'string' ? route.query.q.trim().toLowerCase() : ''))
-const visibleTracks = computed(() => (props.compact ? tracks.value.slice(0, 6) : tracks.value))
+const sourceTracks = computed(() => props.tracks ?? tracks.value)
+const visibleTracks = computed(() => (props.compact ? sourceTracks.value.slice(0, 6) : sourceTracks.value))
+const resolvedTitle = computed(() => props.title || (props.compact ? 'Новые треки' : 'Все треки'))
 
 const filteredTracks = computed(() => {
   return visibleTracks.value.filter((track) => {
@@ -58,6 +69,19 @@ function albumTitle(track: Track) {
   }
 
   return albumLookup.value.get(track.album_id) ?? 'Альбом'
+}
+
+function likesLabel(track: Track) {
+  const count = track.likes_count ?? 0
+  return count === 1 ? '1 лайк' : `${count} лайков`
+}
+
+async function toggleLike(track: Track) {
+  if (!track.id || !isAuthenticated.value) {
+    return
+  }
+
+  await store.toggleTrackLike(track.id)
 }
 
 // function trackShareUrl(track: Track) {
@@ -144,9 +168,9 @@ function waveBarClass(track: Track, index: number, total: number) {
     <div class="section-heading">
       <div>
         <p class="eyebrow">Музыка</p>
-        <h2>{{ compact ? 'Новые треки' : 'Все треки' }}</h2>
+        <h2>{{ resolvedTitle }}</h2>
       </div>
-      <select v-model="selectedAlbumId" aria-label="Фильтр по альбому">
+      <select v-if="showAlbumFilter" v-model="selectedAlbumId" aria-label="Фильтр по альбому">
         <option value="all">Все альбомы</option>
         <option v-for="album in albums" :key="album.id" :value="album.id">{{ album.title }}</option>
       </select>
@@ -155,7 +179,7 @@ function waveBarClass(track: Track, index: number, total: number) {
     <div v-if="loading" class="loading-row">Загружаем треки...</div>
 
     <div v-else-if="filteredTracks.length === 0" class="empty-copy">
-      Пока ни одного трека. Загрузите первый и начните собирать свою библиотеку.
+      {{ emptyText }}
     </div>
 
     <div v-else class="track-list">
@@ -196,7 +220,18 @@ function waveBarClass(track: Track, index: number, total: number) {
         </div>
 
         <div class="track-side">
-          <span>{{ albumTitle(track) }}</span>
+          <span class="track-meta">{{ albumTitle(track) }}</span>
+          <button
+            type="button"
+            class="like-button"
+            :class="{ active: track.liked_by_me }"
+            :aria-label="track.liked_by_me ? `Убрать ${track.title} из избранного` : `Добавить ${track.title} в избранное`"
+            :disabled="!isAuthenticated || !track.id"
+            @click="toggleLike(track)"
+          >
+            <Heart aria-hidden="true" :size="16" :stroke-width="2.3" />
+            <span>{{ likesLabel(track) }}</span>
+          </button>
           <!-- <div class="track-actions">
             <RouterLink
               v-if="track.id"

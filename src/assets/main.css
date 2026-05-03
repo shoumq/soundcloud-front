@@ -549,6 +549,48 @@ main {
   text-align: right;
 }
 
+.track-meta {
+  display: block;
+  max-width: 100%;
+}
+
+.like-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-soft);
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.like-button:hover:not(:disabled) {
+  border-color: rgba(255, 106, 26, 0.42);
+  color: var(--accent);
+}
+
+.like-button.active {
+  border-color: rgba(255, 106, 26, 0.5);
+  background: rgba(255, 106, 26, 0.12);
+  color: #ffd0b2;
+}
+
+.like-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.58;
+}
+
 .track-actions {
   display: flex;
   justify-content: flex-end;
@@ -679,6 +721,12 @@ main {
 
 .source-link {
   border-radius: 6px;
+}
+
+.track-like-button.active {
+  border-color: rgba(255, 106, 26, 0.55);
+  background: rgba(255, 106, 26, 0.14);
+  color: #ffd0b2;
 }
 
 .share-field {

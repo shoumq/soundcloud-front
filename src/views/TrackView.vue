@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { Copy, ExternalLink, Play } from 'lucide-vue-next'
+import { Copy, ExternalLink, Heart, Play } from 'lucide-vue-next'
 import ArtworkCover from '@/components/ArtworkCover.vue'
 import { api, type Track } from '@/services/api'
 import { useMusicStore } from '@/stores/music'
@@ -32,7 +32,7 @@ async function loadTrack() {
   error.value = ''
 
   try {
-    track.value = await api.getTrack(trackId.value)
+    track.value = await api.getTrack(trackId.value, store.token || undefined)
   } catch (caught) {
     error.value = caught instanceof Error ? caught.message : 'Не удалось загрузить трек'
   } finally {
@@ -67,6 +67,19 @@ function playTrack() {
   if (track.value) {
     store.play(track.value)
   }
+}
+
+function likesLabel(nextTrack: Track | null) {
+  const count = nextTrack?.likes_count ?? 0
+  return count === 1 ? '1 лайк' : `${count} лайков`
+}
+
+async function toggleLike() {
+  if (!track.value?.id || !store.isAuthenticated) {
+    return
+  }
+
+  track.value = await store.toggleTrackLike(track.value.id)
 }
 
 function mixerBarStyle(index: number) {
@@ -120,6 +133,16 @@ onMounted(() => {
           <button type="button" class="primary-button icon-button" @click="playTrack">
             <Play aria-hidden="true" :size="17" :stroke-width="2.4" />
             Воспроизвести
+          </button>
+          <button
+            type="button"
+            class="secondary-button icon-button track-like-button"
+            :class="{ active: track.liked_by_me }"
+            :disabled="!store.isAuthenticated || !track.id"
+            @click="toggleLike"
+          >
+            <Heart aria-hidden="true" :size="17" :stroke-width="2.4" />
+            {{ likesLabel(track) }}
           </button>
           <button type="button" class="secondary-button icon-button" @click="copyLink">
             <Copy aria-hidden="true" :size="17" :stroke-width="2.4" />
