@@ -197,7 +197,7 @@ function waveBarClass(track: Track, index: number, total: number) {
 
         <div class="track-side">
           <span>{{ albumTitle(track) }}</span>
-          <div class="track-actions">
+          <!-- <div class="track-actions">
             <RouterLink
               v-if="track.id"
               class="track-action-button"
@@ -215,7 +215,7 @@ function waveBarClass(track: Track, index: number, total: number) {
               <Copy aria-hidden="true" :size="16" :stroke-width="2.3" />
               <span class="copy-state">{{ copiedTrackId === track.id ? 'OK' : '' }}</span>
             </button>
-          </div>
+          </div> -->
         </div>
       </article>
     </div>
