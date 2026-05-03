@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router'
 import ArtworkCover from '@/components/ArtworkCover.vue'
 import { type Track } from '@/services/api'
 import { useMusicStore } from '@/stores/music'
-import { formatSize } from '@/utils/music'
 
 const props = withDefaults(
   defineProps<{
@@ -145,7 +144,6 @@ function waveBarClass(track: Track, index: number, total: number) {
 
         <div class="track-side">
           <span>{{ albumTitle(track) }}</span>
-          <span>{{ formatSize(track.size) }}</span>
         </div>
       </article>
     </div>
