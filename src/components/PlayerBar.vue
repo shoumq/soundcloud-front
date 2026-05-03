@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { storeToRefs } from 'pinia'
-import { Volume2 } from 'lucide-vue-next'
+import { Repeat1, Volume2 } from 'lucide-vue-next'
 import ArtworkCover from '@/components/ArtworkCover.vue'
 import { streamUrl, type Track } from '@/services/api'
 import { useMusicStore } from '@/stores/music'
@@ -14,6 +14,7 @@ const isPlaying = ref(false)
 const currentTime = ref(0)
 const duration = ref(0)
 const volume = ref(0.9)
+const repeatEnabled = ref(false)
 
 async function playTrack(track: Track) {
   store.play(track)
@@ -73,6 +74,10 @@ function changeVolume(event: Event) {
   }
 }
 
+function toggleRepeat() {
+  repeatEnabled.value = !repeatEnabled.value
+}
+
 defineExpose({ playTrack })
 </script>
 
@@ -95,6 +100,17 @@ defineExpose({ playTrack })
         @click="togglePlayback"
       >
         <span aria-hidden="true"></span>
+      </button>
+
+      <button
+        type="button"
+        class="player-toggle"
+        :class="{ active: repeatEnabled }"
+        :disabled="!currentTrack"
+        aria-label="Повтор трека"
+        @click="toggleRepeat"
+      >
+        <Repeat1 aria-hidden="true" :size="16" :stroke-width="2.3" />
       </button>
 
       <span class="time-label">{{ formatTime(currentTime) }}</span>
@@ -130,6 +146,7 @@ defineExpose({ playTrack })
       v-if="currentTrack?.id"
       ref="audioRef"
       :src="streamUrl(currentTrack.id)"
+      :loop="repeatEnabled"
       autoplay
       class="native-audio"
       @play="syncAudioState"

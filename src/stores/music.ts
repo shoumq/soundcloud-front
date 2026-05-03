@@ -58,10 +58,6 @@ export const useMusicStore = defineStore('music', () => {
       const [nextTracks, nextAlbums] = await Promise.all([api.getTracks(), api.getAlbums()])
       tracks.value = nextTracks
       albums.value = nextAlbums
-
-      if (!currentTrack.value && nextTracks.length > 0) {
-        currentTrack.value = nextTracks[0] ?? null
-      }
     } catch (caught) {
       error.value = caught instanceof Error ? caught.message : 'Не удалось загрузить треки и альбомы'
     } finally {

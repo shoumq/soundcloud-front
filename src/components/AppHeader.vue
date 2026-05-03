@@ -29,7 +29,8 @@ function submitSearch() {
   <header class="topbar">
     <RouterLink class="brand" :to="{ name: 'home' }" aria-label="SoundWave главная">
       <span class="brand-mark" aria-hidden="true"></span>
-      <span>SoundWave</span>
+      <span class="brand-wordmark" aria-hidden="true"></span>
+      <span class="sr-only">SoundWave</span>
     </RouterLink>
 
     <nav class="nav-links" aria-label="Основная навигация">
