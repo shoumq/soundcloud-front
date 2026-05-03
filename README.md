@@ -38,6 +38,22 @@ npm install
 npm run dev
 ```
 
+### SEO / Yandex Sitemap
+
+Перед production build укажи домен сайта:
+
+```sh
+VITE_SITE_URL=https://dropwave.ru npm run build
+```
+
+Скрипт сборки автоматически генерирует:
+
+- `public/sitemap.xml`
+- `public/robots.txt`
+
+В sitemap включены публичные индексируемые страницы. Личные страницы вроде `/me`,
+`/favorites` и страницы загрузки не добавляются.
+
 ### Type-Check, Compile and Minify for Production
 
 ```sh

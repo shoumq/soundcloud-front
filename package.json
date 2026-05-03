@@ -4,8 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "seo:generate": "node ./scripts/generate-seo.mjs",
     "dev": "vite",
-    "build": "run-p type-check \"build-only {@}\" --",
+    "build": "npm run seo:generate && run-p type-check \"build-only {@}\" --",
     "preview": "vite preview",
     "test:unit": "vitest",
     "build-only": "vite build",
