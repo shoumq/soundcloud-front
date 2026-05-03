@@ -90,6 +90,8 @@ textarea {
   background-repeat: no-repeat;
   background-size: 430px auto;
   background-position: 83% 22%;
+  position: relative;
+  top: -5px;
 }
 
 .sr-only {
