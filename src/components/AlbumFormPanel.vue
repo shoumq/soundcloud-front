@@ -4,7 +4,7 @@ import { storeToRefs } from 'pinia'
 import { useMusicStore } from '@/stores/music'
 
 const store = useMusicStore()
-const { busy, isAuthenticated } = storeToRefs(store)
+const { albumImportJob, busy, isAuthenticated } = storeToRefs(store)
 
 const albumForm = reactive({
   title: '',
@@ -62,6 +62,9 @@ async function submitImport() {
       <button type="submit" class="secondary-button" :disabled="busy || !isAuthenticated || !importForm.url">
         Импортировать альбом
       </button>
+      <p v-if="albumImportJob && (albumImportJob.status === 'pending' || albumImportJob.status === 'running')" class="form-note">
+        Импорт альбома запущен в фоне. Это может занять несколько минут.
+      </p>
     </form>
   </section>
 </template>

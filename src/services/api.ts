@@ -49,6 +49,18 @@ export interface Album {
   created_at?: string
 }
 
+export interface AlbumImportJob {
+  id: string
+  type: string
+  status: 'pending' | 'running' | 'completed' | 'failed'
+  source_url?: string
+  owner_id?: string
+  album?: Album
+  error?: string
+  created_at?: string
+  updated_at?: string
+}
+
 export interface UserProfile {
   user: User
   tracks: Track[]
@@ -235,7 +247,15 @@ export const api = {
       body: JSON.stringify({ url }),
     })
 
-    return parseResponse<Album>(response)
+    return parseResponse<AlbumImportJob>(response)
+  },
+
+  async getAlbumImportJob(token: string, jobId: string) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/imports/albums/${encodeURIComponent(jobId)}`, {
+      headers: authHeaders(token),
+    })
+
+    return parseResponse<AlbumImportJob>(response)
   },
 
   async uploadTrack(token: string, payload: { title: string; albumId?: string; audio: File; cover?: File }) {

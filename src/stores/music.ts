@@ -1,6 +1,6 @@
 import { computed, ref } from 'vue'
 import { defineStore } from 'pinia'
-import { api, type Album, type Track, type User } from '@/services/api'
+import { api, type Album, type AlbumImportJob, type Track, type User } from '@/services/api'
 
 const TOKEN_KEY = 'soundcloud-front.token'
 const USER_KEY = 'soundcloud-front.user'
@@ -20,6 +20,10 @@ function readUser(): User | null {
   }
 }
 
+function sleep(ms: number) {
+  return new Promise((resolve) => window.setTimeout(resolve, ms))
+}
+
 export const useMusicStore = defineStore('music', () => {
   const token = ref(localStorage.getItem(TOKEN_KEY) ?? '')
   const user = ref<User | null>(readUser())
@@ -31,6 +35,7 @@ export const useMusicStore = defineStore('music', () => {
   const loading = ref(false)
   const busy = ref(false)
   const error = ref('')
+  const albumImportJob = ref<AlbumImportJob | null>(null)
 
   const isAuthenticated = computed(() => token.value.length > 0)
 
@@ -177,9 +182,26 @@ export const useMusicStore = defineStore('music', () => {
     clearError()
 
     try {
-      const album = await api.importSoundCloudAlbum(token.value, url)
+      let job = await api.importSoundCloudAlbum(token.value, url)
+      albumImportJob.value = job
+
+      const startedAt = Date.now()
+      while (job.status === 'pending' || job.status === 'running') {
+        if (Date.now()- startedAt > 20 * 60 * 1000) {
+          throw new Error('Импорт альбома превысил лимит ожидания')
+        }
+
+        await sleep(2000)
+        job = await api.getAlbumImportJob(token.value, job.id)
+        albumImportJob.value = job
+      }
+
+      if (job.status === 'failed') {
+        throw new Error(job.error || 'Не удалось импортировать альбом')
+      }
+
       await loadLibrary()
-      return album
+      return job.album
     } catch (caught) {
       error.value = caught instanceof Error ? caught.message : 'Не удалось импортировать альбом'
       throw caught
@@ -274,6 +296,7 @@ export const useMusicStore = defineStore('music', () => {
     loading,
     busy,
     error,
+    albumImportJob,
     isAuthenticated,
     clearError,
     loadLibrary,
