@@ -21,7 +21,7 @@ const emit = defineEmits<{
 }>()
 
 const route = useRoute()
-const router = useRouter()
+// const router = useRouter()
 const store = useMusicStore()
 const { albums, currentTrack, isPlaying, loading, playbackProgress, tracks } = storeToRefs(store)
 const selectedAlbumId = ref('all')
