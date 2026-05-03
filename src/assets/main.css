@@ -542,6 +542,50 @@ main {
   box-shadow: 0 14px 34px rgba(255, 85, 0, 0.12);
 }
 
+.track-side {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+  text-align: right;
+}
+
+.track-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.track-action-button {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--text-soft);
+  cursor: pointer;
+}
+
+.track-action-button:hover {
+  border-color: rgba(255, 106, 26, 0.42);
+  color: var(--accent);
+}
+
+.copy-state {
+  position: absolute;
+  right: -4px;
+  bottom: -7px;
+  padding: 1px 4px;
+  border-radius: 999px;
+  background: var(--accent-strong);
+  color: #fff;
+  font-size: 9px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
 .round-play {
   display: grid;
   place-items: center;
@@ -553,6 +597,100 @@ main {
   color: #fff;
   cursor: pointer;
   font-weight: 900;
+}
+
+.track-card-page {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.track-card {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: 34px;
+  align-items: center;
+  padding: 32px;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255, 106, 26, 0.08), transparent 38%),
+    var(--bg-panel);
+}
+
+.track-card .cover-card.large {
+  width: 260px;
+}
+
+.track-card-copy {
+  min-width: 0;
+}
+
+.track-card-copy h1 {
+  margin: 6px 0 10px;
+  font-size: 44px;
+  line-height: 1;
+}
+
+.track-card-copy > span {
+  color: var(--text-muted);
+}
+
+.track-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.track-mixer {
+  display: flex;
+  align-items: flex-end;
+  gap: 7px;
+  height: 190px;
+  margin: 28px 0;
+  padding: 18px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent),
+    #101012;
+}
+
+.track-mixer i {
+  flex: 1 1 0;
+  min-width: 6px;
+  border-radius: 999px 999px 4px 4px;
+  background: linear-gradient(180deg, #ffad75 0%, var(--accent-strong) 72%, #612917 100%);
+  box-shadow: 0 0 18px rgba(255, 85, 0, 0.16);
+  animation: mixer-pulse 1.4s ease-in-out infinite;
+  animation-delay: var(--mixer-delay);
+  transform-origin: center bottom;
+}
+
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+}
+
+.source-link {
+  border-radius: 6px;
+}
+
+.share-field {
+  width: 100%;
+  min-height: 42px;
+  padding: 0 12px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #101012;
+  color: var(--text-muted);
+  text-overflow: ellipsis;
 }
 
 .track-info {
@@ -576,6 +714,15 @@ main {
   color: var(--accent);
 }
 
+.track-cover-link {
+  display: block;
+  border-radius: 4px;
+}
+
+.track-cover-link:hover {
+  box-shadow: 0 0 0 2px rgba(255, 106, 26, 0.36);
+}
+
 .track-info h3,
 .album-card h3 {
   margin: 3px 0 8px;
@@ -583,6 +730,10 @@ main {
   text-overflow: ellipsis;
   white-space: nowrap;
   font-size: 17px;
+}
+
+.track-info h3 a:hover {
+  color: var(--accent);
 }
 
 .mini-wave {
@@ -643,6 +794,19 @@ main {
 
 .track-row.playing .mini-wave i.current-playing {
   opacity: 1;
+}
+
+@keyframes mixer-pulse {
+  0%,
+  100% {
+    transform: scaleY(0.92);
+    opacity: 0.78;
+  }
+
+  50% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 @keyframes mini-wave-cursor {
@@ -1227,7 +1391,29 @@ main {
     text-align: left;
   }
 
+  .track-actions {
+    justify-content: flex-start;
+  }
+
   .cover-card {
     width: 58px;
+  }
+
+  .track-card {
+    grid-template-columns: 1fr;
+    padding: 20px;
+  }
+
+  .track-card .cover-card.large {
+    width: min(100%, 280px);
+  }
+
+  .track-card-copy h1 {
+    font-size: 32px;
+  }
+
+  .track-mixer {
+    height: 150px;
+    gap: 5px;
   }
 }

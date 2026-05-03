@@ -127,6 +127,11 @@ export const api = {
     return parseResponse<Track[]>(response)
   },
 
+  async getTrack(trackId: string) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/tracks/${encodeURIComponent(trackId)}`)
+    return parseResponse<Track>(response)
+  },
+
   async getAlbums() {
     const response = await fetch(`${API_BASE_URL}/api/v1/albums`)
     return parseResponse<Album[]>(response)

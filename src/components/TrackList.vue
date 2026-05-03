@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { Copy, ExternalLink } from 'lucide-vue-next'
 import ArtworkCover from '@/components/ArtworkCover.vue'
 import { type Track } from '@/services/api'
 import { useMusicStore } from '@/stores/music'
@@ -20,9 +21,11 @@ const emit = defineEmits<{
 }>()
 
 const route = useRoute()
+const router = useRouter()
 const store = useMusicStore()
 const { albums, currentTrack, isPlaying, loading, playbackProgress, tracks } = storeToRefs(store)
 const selectedAlbumId = ref('all')
+const copiedTrackId = ref('')
 
 const query = computed(() => (typeof route.query.q === 'string' ? route.query.q.trim().toLowerCase() : ''))
 const visibleTracks = computed(() => (props.compact ? tracks.value.slice(0, 6) : tracks.value))
@@ -55,6 +58,45 @@ function albumTitle(track: Track) {
   }
 
   return albumLookup.value.get(track.album_id) ?? 'Альбом'
+}
+
+function trackShareUrl(track: Track) {
+  if (!track.id) {
+    return ''
+  }
+
+  return new URL(router.resolve({ name: 'track', params: { id: track.id } }).href, window.location.origin).toString()
+}
+
+async function writeClipboard(value: string) {
+  if (navigator.clipboard) {
+    await navigator.clipboard.writeText(value)
+    return
+  }
+
+  const input = document.createElement('input')
+  input.value = value
+  input.style.position = 'fixed'
+  input.style.opacity = '0'
+  document.body.append(input)
+  input.select()
+  document.execCommand('copy')
+  input.remove()
+}
+
+async function copyTrackLink(track: Track) {
+  const url = trackShareUrl(track)
+  if (!url || !track.id) {
+    return
+  }
+
+  await writeClipboard(url)
+  copiedTrackId.value = track.id
+  window.setTimeout(() => {
+    if (copiedTrackId.value === track.id) {
+      copiedTrackId.value = ''
+    }
+  }, 1600)
 }
 
 function waveStyle(index: number) {
@@ -127,14 +169,22 @@ function waveBarClass(track: Track, index: number, total: number) {
           <span>{{ currentTrack?.id === track.id ? '||' : '>' }}</span>
         </button>
 
-        <ArtworkCover :item="track" />
+        <RouterLink v-if="track.id" class="track-cover-link" :to="{ name: 'track', params: { id: track.id } }">
+          <ArtworkCover :item="track" />
+        </RouterLink>
+        <ArtworkCover v-else :item="track" />
 
         <div class="track-info">
           <RouterLink v-if="track.owner_id" class="track-artist-link" :to="{ name: 'user', params: { id: track.owner_id } }">
             {{ track.artist ?? 'Неизвестный артист' }}
           </RouterLink>
           <span v-else>{{ track.artist ?? 'Неизвестный артист' }}</span>
-          <h3>{{ track.title ?? 'Трек без названия' }}</h3>
+          <h3>
+            <RouterLink v-if="track.id" :to="{ name: 'track', params: { id: track.id } }">
+              {{ track.title ?? 'Трек без названия' }}
+            </RouterLink>
+            <span v-else>{{ track.title ?? 'Трек без названия' }}</span>
+          </h3>
           <div class="mini-wave" aria-hidden="true">
             <i
               v-for="index in 24"
@@ -147,6 +197,25 @@ function waveBarClass(track: Track, index: number, total: number) {
 
         <div class="track-side">
           <span>{{ albumTitle(track) }}</span>
+          <div class="track-actions">
+            <RouterLink
+              v-if="track.id"
+              class="track-action-button"
+              :to="{ name: 'track', params: { id: track.id } }"
+              :aria-label="`Открыть карточку ${track.title}`"
+            >
+              <ExternalLink aria-hidden="true" :size="16" :stroke-width="2.3" />
+            </RouterLink>
+            <button
+              type="button"
+              class="track-action-button"
+              :aria-label="`Скопировать ссылку на ${track.title}`"
+              @click="copyTrackLink(track)"
+            >
+              <Copy aria-hidden="true" :size="16" :stroke-width="2.3" />
+              <span class="copy-state">{{ copiedTrackId === track.id ? 'OK' : '' }}</span>
+            </button>
+          </div>
         </div>
       </article>
     </div>

@@ -3,6 +3,7 @@ import AlbumsView from '@/views/AlbumsView.vue'
 import HomeView from '@/views/HomeView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import StreamView from '@/views/StreamView.vue'
+import TrackView from '@/views/TrackView.vue'
 import UploadView from '@/views/UploadView.vue'
 import UserProfileView from '@/views/UserProfileView.vue'
 
@@ -18,6 +19,11 @@ const router = createRouter({
       path: '/stream',
       name: 'stream',
       component: StreamView,
+    },
+    {
+      path: '/tracks/:id',
+      name: 'track',
+      component: TrackView,
     },
     {
       path: '/albums',
