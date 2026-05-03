@@ -12,8 +12,12 @@ describe('App', () => {
       routes: [
         { path: '/', name: 'home', component: { template: '<div />' } },
         { path: '/stream', name: 'stream', component: { template: '<div />' } },
+        { path: '/favorites', name: 'favorites', component: { template: '<div />' } },
+        { path: '/tracks/:id', name: 'track', component: { template: '<div />' } },
         { path: '/albums', name: 'albums', component: { template: '<div />' } },
         { path: '/upload', name: 'upload', component: { template: '<div />' } },
+        { path: '/me', name: 'profile', component: { template: '<div />' } },
+        { path: '/users/:id', name: 'user', component: { template: '<div />' } },
       ],
     })
 
