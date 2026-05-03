@@ -36,10 +36,10 @@ function closeMobileMenu() {
 <template>
   <header class="topbar">
     <div class="topbar-row">
-      <RouterLink class="brand" :to="{ name: 'home' }" aria-label="SoundWave главная" @click="closeMobileMenu">
+      <RouterLink class="brand" :to="{ name: 'home' }" aria-label="Dropwave главная" @click="closeMobileMenu">
         <span class="brand-mark" aria-hidden="true"></span>
         <span class="brand-wordmark" aria-hidden="true"></span>
-        <span class="sr-only">SoundWave</span>
+        <span class="sr-only">Dropwave</span>
       </RouterLink>
 
       <button

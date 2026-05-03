@@ -30,6 +30,6 @@ describe('App', () => {
       },
     })
 
-    expect(wrapper.text()).toContain('SoundWave')
+    expect(wrapper.text()).toContain('Dropwave')
   })
 })

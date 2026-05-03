@@ -87,7 +87,7 @@ defineExpose({ playTrack })
       <ArtworkCover :item="currentTrack" size="small" />
       <div>
         <strong>{{ currentTrack?.title ?? 'Выберите трек' }}</strong>
-        <span>{{ currentTrack?.artist ?? 'SoundWave' }}</span>
+        <span>{{ currentTrack?.artist ?? 'Dropwave' }}</span>
       </div>
     </div>
     <div class="custom-player">
