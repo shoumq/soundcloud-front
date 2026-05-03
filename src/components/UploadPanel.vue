@@ -20,6 +20,11 @@ const uploadForm = reactive<{
   cover: null,
 })
 
+const importForm = reactive({
+  url: '',
+  albumId: '',
+})
+
 function onAudioChange(event: Event) {
   const input = event.target as HTMLInputElement
   const file = input.files?.[0] ?? null
@@ -52,6 +57,16 @@ async function submitUpload() {
   uploadForm.cover = null
   uploadAudioName.value = ''
   uploadCoverName.value = ''
+}
+
+async function submitImport() {
+  await store.importSoundCloudTrack({
+    url: importForm.url,
+    albumId: importForm.albumId || undefined,
+  })
+
+  importForm.url = ''
+  importForm.albumId = ''
 }
 </script>
 
@@ -93,6 +108,29 @@ async function submitUpload() {
       </label>
       <button type="submit" class="primary-button" :disabled="busy || !isAuthenticated || !uploadForm.audio">
         Загрузить трек
+      </button>
+    </form>
+
+    <form class="form-stack import-form" @submit.prevent="submitImport">
+      <label>
+        Ссылка SoundCloud
+        <input
+          v-model="importForm.url"
+          type="url"
+          required
+          placeholder="https://soundcloud.com/artist/track"
+          :disabled="!isAuthenticated"
+        />
+      </label>
+      <label>
+        Альбом
+        <select v-model="importForm.albumId" :disabled="!isAuthenticated">
+          <option value="">Сингл</option>
+          <option v-for="album in albums" :key="album.id" :value="album.id">{{ album.title }}</option>
+        </select>
+      </label>
+      <button type="submit" class="secondary-button" :disabled="busy || !isAuthenticated || !importForm.url">
+        Импортировать из SoundCloud
       </button>
     </form>
   </section>

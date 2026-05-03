@@ -20,7 +20,10 @@ const { albums } = storeToRefs(store)
 
     <div v-else class="album-grid">
       <article v-for="album in albums" :key="album.id" class="album-card">
-        <div class="album-art">{{ initials(album) }}</div>
+        <div class="album-art">
+          <img v-if="album.artwork_url" :src="album.artwork_url" alt="" />
+          <span v-else>{{ initials(album) }}</span>
+        </div>
         <div>
           <h3>{{ album.title ?? 'Альбом без названия' }}</h3>
           <p>{{ album.description || 'Описание пока не добавлено.' }}</p>

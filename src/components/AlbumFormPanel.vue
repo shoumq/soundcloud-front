@@ -11,10 +11,19 @@ const albumForm = reactive({
   description: '',
 })
 
+const importForm = reactive({
+  url: '',
+})
+
 async function submitAlbum() {
   await store.createAlbum(albumForm.title, albumForm.description)
   albumForm.title = ''
   albumForm.description = ''
+}
+
+async function submitImport() {
+  await store.importSoundCloudAlbum(importForm.url)
+  importForm.url = ''
 }
 </script>
 
@@ -37,6 +46,22 @@ async function submitAlbum() {
         <textarea v-model="albumForm.description" rows="3" :disabled="!isAuthenticated"></textarea>
       </label>
       <button type="submit" class="secondary-button" :disabled="busy || !isAuthenticated">Создать альбом</button>
+    </form>
+
+    <form class="form-stack import-form" @submit.prevent="submitImport">
+      <label>
+        Ссылка на альбом SoundCloud
+        <input
+          v-model="importForm.url"
+          type="url"
+          required
+          placeholder="https://soundcloud.com/artist/sets/album"
+          :disabled="!isAuthenticated"
+        />
+      </label>
+      <button type="submit" class="secondary-button" :disabled="busy || !isAuthenticated || !importForm.url">
+        Импортировать альбом
+      </button>
     </form>
   </section>
 </template>

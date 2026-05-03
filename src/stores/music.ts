@@ -156,6 +156,26 @@ export const useMusicStore = defineStore('music', () => {
     }
   }
 
+  async function importSoundCloudAlbum(url: string) {
+    if (!token.value) {
+      throw new Error('Войдите, чтобы импортировать альбомы')
+    }
+
+    busy.value = true
+    clearError()
+
+    try {
+      const album = await api.importSoundCloudAlbum(token.value, url)
+      await loadLibrary()
+      return album
+    } catch (caught) {
+      error.value = caught instanceof Error ? caught.message : 'Не удалось импортировать альбом'
+      throw caught
+    } finally {
+      busy.value = false
+    }
+  }
+
   async function uploadTrack(payload: { title: string; albumId?: string; audio: File; cover?: File }) {
     if (!token.value) {
       throw new Error('Войдите, чтобы загружать треки')
@@ -171,6 +191,27 @@ export const useMusicStore = defineStore('music', () => {
       return track
     } catch (caught) {
       error.value = caught instanceof Error ? caught.message : 'Не удалось загрузить трек'
+      throw caught
+    } finally {
+      busy.value = false
+    }
+  }
+
+  async function importSoundCloudTrack(payload: { url: string; albumId?: string }) {
+    if (!token.value) {
+      throw new Error('Войдите, чтобы импортировать треки')
+    }
+
+    busy.value = true
+    clearError()
+
+    try {
+      const track = await api.importSoundCloudTrack(token.value, payload)
+      tracks.value = [track, ...tracks.value]
+      currentTrack.value = track
+      return track
+    } catch (caught) {
+      error.value = caught instanceof Error ? caught.message : 'Не удалось импортировать трек'
       throw caught
     } finally {
       busy.value = false
@@ -200,6 +241,8 @@ export const useMusicStore = defineStore('music', () => {
     setPlaybackProgress,
     setUser,
     createAlbum,
+    importSoundCloudAlbum,
     uploadTrack,
+    importSoundCloudTrack,
   }
 })

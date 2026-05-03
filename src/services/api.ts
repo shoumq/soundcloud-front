@@ -28,6 +28,10 @@ export interface Track {
   cover_filename?: string
   cover_content_type?: string
   cover_size?: number
+  artwork_url?: string
+  source_provider?: string
+  source_url?: string
+  embed_html?: string
   created_at?: string
 }
 
@@ -36,6 +40,10 @@ export interface Album {
   owner_id?: string
   title?: string
   description?: string
+  artwork_url?: string
+  source_provider?: string
+  source_url?: string
+  embed_html?: string
   created_at?: string
 }
 
@@ -206,6 +214,19 @@ export const api = {
     return parseResponse<Album>(response)
   },
 
+  async importSoundCloudAlbum(token: string, url: string) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/albums/import/soundcloud`, {
+      method: 'POST',
+      headers: {
+        ...authHeaders(token),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ url }),
+    })
+
+    return parseResponse<Album>(response)
+  },
+
   async uploadTrack(token: string, payload: { title: string; albumId?: string; audio: File; cover?: File }) {
     const formData = new FormData()
     formData.append('title', payload.title)
@@ -225,6 +246,22 @@ export const api = {
         Authorization: `Bearer ${token}`,
       },
       body: formData,
+    })
+
+    return parseResponse<Track>(response)
+  },
+
+  async importSoundCloudTrack(token: string, payload: { url: string; albumId?: string }) {
+    const response = await fetch(`${API_BASE_URL}/api/v1/tracks/import/soundcloud`, {
+      method: 'POST',
+      headers: {
+        ...authHeaders(token),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        url: payload.url,
+        album_id: payload.albumId ?? '',
+      }),
     })
 
     return parseResponse<Track>(response)

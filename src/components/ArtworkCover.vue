@@ -15,6 +15,7 @@ function hasTrackCover(item?: Track | Album | null): item is Track {
 <template>
   <div class="cover-card" :class="size">
     <img v-if="hasTrackCover(props.item)" :src="coverUrl(props.item.id ?? '')" alt="" />
+    <img v-else-if="props.item?.artwork_url" :src="props.item.artwork_url" alt="" />
     <span v-else>{{ props.item ? initials(props.item) : 'SC' }}</span>
   </div>
 </template>

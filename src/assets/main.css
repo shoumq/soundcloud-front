@@ -713,6 +713,13 @@ main {
 
 .album-art {
   border-radius: 6px;
+  overflow: hidden;
+}
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .album-card p {
@@ -725,6 +732,12 @@ main {
 .form-stack {
   display: grid;
   gap: 14px;
+}
+
+.import-form {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
 }
 
 .form-stack label {
